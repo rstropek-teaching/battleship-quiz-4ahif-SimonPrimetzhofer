@@ -41,14 +41,17 @@ $(() => {
     //Game-Loop
     for(let count=0;count<size.length;){
       //Random starting coordinates with upper border 9 and lower border 0 (=> fields from 0 to 9 in both dimensions)
-      let startX=parseInt(Math.random()*(9));
-      let startY=parseInt(Math.random()*(9));
+      let startX=parseInt(0+Math.random()*(10-0));
+      let startY=parseInt(0+Math.random()*(10-0));
+
+      //Random number for deciding direction
+      let rand=parseInt(0+Math.random()*(100-0));
 
       //Condition-variable for indicating a ship next to another one
       let skip=false;
 
       //Checking possible directions and painting the squares
-      if(startX+size[count]<lenX){//Vertical align
+      if(rand%2==0&&startX+size[count]<lenX){//Vertical align
 
         //Ship before or after the current ship? If yes, skip this ship and do not paint it
         if($(`td[data-r=${startX-1}][data-c=${startY}]`).hasClass("ship")||$(`td[data-r=${startX+size[count]}][data-c=${startY}]`).hasClass("ship"))
@@ -66,7 +69,7 @@ $(() => {
           count++;//Next size in the array 
         }else skip=false;//Skip - do nothing and reset the skip variable
          
-      }else if(startY+size[count]<lenY){//Horizontal align
+      }else if(rand%2==1&&startY+size[count]<lenY&&count%2==1){//Horizontal align
         //Ship before or after the current ship?
         if($(`td[data-r=${startX}][data-c=${startY-1}]`).hasClass("ship")||$(`td[data-r=${startX}][data-c=${startY+size[count]}]`).hasClass("ship"))
         skip=true;
